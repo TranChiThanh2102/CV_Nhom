@@ -1,0 +1,262 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  line-height: 1.6;
+  color: #fff; /* Chữ trắng mặc định cho nội dung trên nền video tối */
+  /* background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); /* Bỏ nền cũ */
+  /* background-attachment: fixed; /* Bỏ fixed background */
+  min-height: 100vh;
+  padding-top: 40px; /* Khoảng trống trên cùng cho nội dung */
+  position: relative; /* Cần thiết cho z-index */
+  /* overflow: hidden; /* Ngăn cuộn nếu video tràn */
+}
+
+/* Style cho Video Background */
+#background-video {
+  position: fixed; /* Cố định video tại vị trí */
+  top: 0;
+  left: 0;
+  min-width: 100%; /* Đảm bảo chiều rộng tối thiểu 100% viewport */
+  min-height: 100%; /* Đảm bảo chiều cao tối thiểu 100% viewport */
+  width: auto; /* Chiều rộng tự động */
+  height: auto; /* Chiều cao tự động */
+  z-index: -1; /* Đặt video ở lớp dưới cùng */
+  overflow: hidden; /* Ẩn phần video tràn ra ngoài */
+  /* Optional: Opacity to make content more readable */
+  opacity: 0.2;
+}
+
+/* Lớp phủ (Overlay) - Để làm tối video nền, giúp text dễ đọc */
+/* Sử dụng pseudo-element ::before trên body */
+body::before {
+  content: "";
+  position: fixed; /* Cố định lớp phủ cùng với video */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Thay đổi màu nền để làm tối hơn */
+  background-color: rgba(0, 0, 0, 0.8); /* Tăng độ trong suốt màu đen lên 60% */
+  /* Nếu 60% vẫn chưa đủ tối, có thể tăng lên 0.7 hoặc 0.8 */
+  z-index: -1; /* Đặt lớp phủ trên video (-1) nhưng dưới nội dung (0) */
+  pointer-events: none; /* Đảm bảo không chặn tương tác với nội dung */
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  align-items: flex-start;
+  flex-direction: row;
+  position: relative; /* Đảm bảo container nằm trên lớp phủ */
+  z-index: 0;
+}
+
+.main-title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 2.8em;
+  color: #fff;
+  font-weight: 700;
+  width: 100%;
+  display: block;
+  flex-basis: 100%;
+  order: 1;
+}
+
+.main-subtitle {
+  text-align: center;
+  margin-bottom: 60px;
+  font-size: 1.1em;
+  color: #ccc;
+  width: 100%;
+  flex-basis: 100%;
+  order: 2;
+}
+
+.member-card {
+  background-color: rgba(42, 42, 42, 0.8); /* Nền xám đậm bán trong suốt */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #fff;
+  flex-basis: 220px;
+  flex-grow: 1;
+  max-width: 250px;
+  order: 3;
+}
+
+.member-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+}
+
+.member-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: none;
+  margin-bottom: 15px;
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.member-name:hover {
+  color: #ff6600;
+}
+
+.member-role {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.view-profile-button {
+  display: inline-block;
+  background-color: #fff;
+  color: #333;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.view-profile-button:hover {
+  background-color: #eee;
+  color: #333;
+}
+
+@media (max-width: 1080px) {
+  .container {
+    gap: 25px;
+  }
+  .member-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  .member-name {
+    font-size: 1.2em;
+  }
+  .member-role {
+    font-size: 0.9em;
+  }
+  .view-profile-button {
+    padding: 8px 20px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 30px;
+  }
+  .main-title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  .main-subtitle {
+    font-size: 1em;
+    margin-bottom: 40px;
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0 15px;
+  }
+  .member-card {
+    width: 80%;
+    max-width: 300px;
+    padding: 15px;
+    gap: 10px;
+  }
+  .member-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  .member-name {
+    font-size: 1.3em;
+  }
+  .member-role {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  .view-profile-button {
+    padding: 10px 24px;
+    font-size: 1em;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 20px;
+  }
+  .main-title {
+    font-size: 2em;
+    margin-bottom: 8px;
+  }
+  .main-subtitle {
+    font-size: 0.9em;
+    margin-bottom: 30px;
+  }
+  .container {
+    gap: 15px;
+    padding: 0 10px;
+  }
+  .member-card {
+    padding: 10px;
+    gap: 8px;
+  }
+  .member-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  .member-name {
+    font-size: 1.2em;
+  }
+  .member-role {
+    font-size: 0.9em;
+    margin-bottom: 6px;
+  }
+  .view-profile-button {
+    padding: 8px 20px;
+    font-size: 0.9em;
+    margin-top: 8px;
+  }
+}
